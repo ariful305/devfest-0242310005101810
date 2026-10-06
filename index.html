@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TenderPacker - Tender Document Package Preparation & Validation Engine</title>
-  <meta name="description" content="In-browser tender document package compiler, verification engine, duplicate detector, and PDF builder with bilingual English/Bangla support.">
+  <meta name="description"
+    content="In-browser tender document package compiler, verification engine, duplicate detector, and PDF builder with bilingual English/Bangla support.">
   <link rel="stylesheet" href="styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
   <!-- App Header -->
@@ -17,7 +20,8 @@
     <div class="header-container">
       <div class="brand-section">
         <div class="brand-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+            stroke-linecap="round" stroke-linejoin="round">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
             <polyline points="14 2 14 8 20 8"></polyline>
             <line x1="16" y1="13" x2="8" y2="13"></line>
@@ -28,7 +32,7 @@
         <div>
           <div class="brand-title">
             <span data-i18n="appTitle">TenderPacker</span>
-            <span class="brand-tag">v2.0 Pro</span>
+
           </div>
           <div class="brand-subtitle" data-i18n="appSubtitle">Tender Document Preparation & Validation Engine</div>
         </div>
@@ -48,7 +52,8 @@
         </label>
 
         <!-- Load Sample Pack Button -->
-        <button class="btn btn-outline-primary btn-sm" id="btn-load-sample" type="button" title="Load sample tender files">
+        <button class="btn btn-outline-primary btn-sm" id="btn-load-sample" type="button"
+          title="Load sample tender files">
           <span>🚀</span> <span data-i18n="loadSample">Load Sample Pack</span>
         </button>
 
@@ -58,17 +63,20 @@
         </button>
 
         <!-- Bonus 3: Export Checklist CSV/Excel -->
-        <button class="btn btn-secondary btn-sm" id="btn-export-checklist" type="button" title="Export Checklist to CSV / Excel">
+        <button class="btn btn-secondary btn-sm" id="btn-export-checklist" type="button"
+          title="Export Checklist to CSV / Excel">
           <span>📊</span> <span data-i18n="exportChecklist">Export Checklist</span>
         </button>
 
         <!-- Bonus 2: Seal & Signature Modal Button -->
-        <button class="btn btn-secondary btn-sm" id="btn-open-seal-modal" type="button" title="Add Company Seal or Signature">
+        <button class="btn btn-secondary btn-sm" id="btn-open-seal-modal" type="button"
+          title="Add Company Seal or Signature">
           <span>🖋️</span> <span data-i18n="sealSignature">Seal & Signature</span>
         </button>
 
         <!-- Bonus 4: Save & Open Project File -->
-        <button class="btn btn-secondary btn-sm" id="btn-save-project" type="button" title="Export project to JSON file">
+        <button class="btn btn-secondary btn-sm" id="btn-save-project" type="button"
+          title="Export project to JSON file">
           <span>💾</span> <span data-i18n="saveProject">Save Project</span>
         </button>
 
@@ -78,7 +86,8 @@
         </label>
 
         <!-- Bonus 8: AI Assistant Button -->
-        <button class="btn btn-purple btn-sm" id="btn-open-ai-modal" type="button" title="AI Compliance Auditor & Advisor">
+        <button class="btn btn-purple btn-sm" id="btn-open-ai-modal" type="button"
+          title="AI Compliance Auditor & Advisor">
           <span>🤖</span> <span data-i18n="aiAssistant">AI Help</span>
         </button>
 
@@ -92,7 +101,7 @@
 
   <!-- Main Content Container -->
   <main class="main-content">
-    
+
     <!-- Notification Area -->
     <div class="notification-area" id="notification-area"></div>
 
@@ -114,7 +123,7 @@
 
     <!-- Two-Column Work Area -->
     <div class="work-grid">
-      
+
       <!-- Left Column: Uploaded Files -->
       <section class="panel-card" id="files-panel">
         <div class="panel-header">
@@ -130,13 +139,15 @@
         <div class="panel-body">
           <!-- Dropzone -->
           <div class="dropzone" id="pdf-dropzone">
-            <svg class="dropzone-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="dropzone-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
               <polyline points="17 8 12 3 7 8"></polyline>
               <line x1="12" y1="3" x2="12" y2="15"></line>
             </svg>
             <div class="dropzone-text" data-i18n="dropzoneTitle">Drop PDF files here or click to browse</div>
-            <div class="dropzone-subtext" data-i18n="dropzoneSub">Accepts multiple PDF files simultaneously. Damaged/bad files handled safely.</div>
+            <div class="dropzone-subtext" data-i18n="dropzoneSub">Accepts multiple PDF files simultaneously. Damaged/bad
+              files handled safely.</div>
             <input type="file" id="pdf-file-input" multiple accept=".pdf,application/pdf">
           </div>
 
@@ -154,7 +165,8 @@
             <div class="panel-title">
               <span>📑</span> <span data-i18n="requiredDocsTitle">Required Documents</span>
             </div>
-            <div class="panel-subtitle" data-i18n="requiredDocsSubtitle">Arrange, match files, and verify expiry dates</div>
+            <div class="panel-subtitle" data-i18n="requiredDocsSubtitle">Arrange, match files, and verify expiry dates
+            </div>
           </div>
         </div>
 
@@ -185,7 +197,8 @@
       <div class="generation-header">
         <div>
           <h3 class="generation-title" data-i18n="generationTitle">Package Generation & Readiness</h3>
-          <p class="generation-summary-text">Follows tender rules: Cover page in English, sorted pages, running footers, and optional index/seal.</p>
+          <p class="generation-summary-text">Follows tender rules: Cover page in English, sorted pages, running footers,
+            and optional index/seal.</p>
         </div>
         <div class="generation-controls">
           <button class="btn btn-secondary" id="btn-preview-package" disabled>
@@ -203,15 +216,18 @@
       <!-- Bonus Configuration Toggles -->
       <div class="package-options-row">
         <!-- Bonus 1 & 5: Index Page with Start Pages and correct Bangla text -->
-        <label class="checkbox-label" title="Insert an Index / Table of Contents page right after the Cover page with start page numbers">
+        <label class="checkbox-label"
+          title="Insert an Index / Table of Contents page right after the Cover page with start page numbers">
           <input type="checkbox" id="chk-include-index" checked>
-          <span>📑 <strong data-i18n="includeIndexTitle">Include Document Index Page</strong> (<span data-i18n="includeIndexDesc">Page numbers where each document starts + Bangla text</span>)</span>
+          <span>📑 <strong data-i18n="includeIndexTitle">Include Document Index Page</strong> (<span
+              data-i18n="includeIndexDesc">Page numbers where each document starts + Bangla text</span>)</span>
         </label>
 
         <!-- Bonus 2: Seal Stamp Checkbox -->
         <label class="checkbox-label" title="Stamp digital seal or signature if uploaded">
           <input type="checkbox" id="chk-stamp-seal" checked>
-          <span>🖋️ <strong data-i18n="stampSealTitle">Stamp Digital Seal/Signature</strong> (<span id="seal-status-badge">No seal uploaded</span>)</span>
+          <span>🖋️ <strong data-i18n="stampSealTitle">Stamp Digital Seal/Signature</strong> (<span
+              id="seal-status-badge">No seal uploaded</span>)</span>
         </label>
       </div>
 
@@ -251,13 +267,16 @@
           <label class="form-label">Upload Seal / Signature Image (PNG)</label>
           <div style="display: flex; gap: 0.5rem; align-items: center;">
             <input type="file" id="seal-file-input" accept="image/png" class="form-input" style="flex: 1;">
-            <button class="btn btn-secondary btn-sm" id="btn-use-sample-logo" type="button" title="Use company_logo.png from sample pack">Use Sample Logo</button>
+            <button class="btn btn-secondary btn-sm" id="btn-use-sample-logo" type="button"
+              title="Use company_logo.png from sample pack">Use Sample Logo</button>
           </div>
           <small style="color: #64748b;">Upload a transparent PNG image to stamp onto chosen document pages.</small>
         </div>
 
-        <div id="seal-preview-box" style="display: none; padding: 1rem; background: #ffffff; border: 1px solid var(--border); border-radius: 8px; text-align: center;">
-          <img id="seal-preview-img" style="max-height: 80px; max-width: 160px; object-fit: contain;" alt="Seal Preview">
+        <div id="seal-preview-box"
+          style="display: none; padding: 1rem; background: #ffffff; border: 1px solid var(--border); border-radius: 8px; text-align: center;">
+          <img id="seal-preview-img" style="max-height: 80px; max-width: 160px; object-fit: contain;"
+            alt="Seal Preview">
           <div style="margin-top: 0.5rem;">
             <button class="btn btn-danger btn-sm" id="btn-remove-seal" type="button">Remove Seal</button>
           </div>
@@ -319,10 +338,12 @@
         <div class="form-group">
           <label class="form-label">Your Gemini / AI API Key (Rulebook Section 5.5)</label>
           <div style="display: flex; gap: 0.5rem;">
-            <input type="password" id="ai-api-key-input" class="form-input" placeholder="Enter your Gemini API key (AIzaSy...)" style="flex: 1;">
+            <input type="password" id="ai-api-key-input" class="form-input"
+              placeholder="Enter your Gemini API key (AIzaSy...)" style="flex: 1;">
             <button class="btn btn-secondary btn-sm" id="btn-save-api-key" type="button">Save Key</button>
           </div>
-          <small style="color: #64748b;">Key is stored solely in your browser's local storage and used directly from your client.</small>
+          <small style="color: #64748b;">Key is stored solely in your browser's local storage and used directly from
+            your client.</small>
         </div>
 
         <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
@@ -336,15 +357,18 @@
 
         <div class="form-group">
           <label class="form-label">AI Analysis & Insights</label>
-          <div id="ai-output-box" style="background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 1rem; min-height: 180px; max-height: 300px; overflow-y: auto; font-size: 0.88rem; color: #1e293b; line-height: 1.6;">
-            <p style="color: #94a3b8;">Click "Run AI Compliance Audit" or ask a question to analyze your tender submission package.</p>
+          <div id="ai-output-box"
+            style="background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 1rem; min-height: 180px; max-height: 300px; overflow-y: auto; font-size: 0.88rem; color: #1e293b; line-height: 1.6;">
+            <p style="color: #94a3b8;">Click "Run AI Compliance Audit" or ask a question to analyze your tender
+              submission package.</p>
           </div>
         </div>
 
         <div class="form-group">
           <label class="form-label">Ask AI Question</label>
           <div style="display: flex; gap: 0.5rem;">
-            <input type="text" id="ai-user-prompt" class="form-input" placeholder="e.g. Why is bank solvency expiry date required?" style="flex: 1;">
+            <input type="text" id="ai-user-prompt" class="form-input"
+              placeholder="e.g. Why is bank solvency expiry date required?" style="flex: 1;">
             <button class="btn btn-primary btn-sm" id="btn-ai-send-prompt" type="button">Ask</button>
           </div>
         </div>
@@ -378,4 +402,5 @@
   <!-- Main Application Script -->
   <script src="app.js"></script>
 </body>
+
 </html>
