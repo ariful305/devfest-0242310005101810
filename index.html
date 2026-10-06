@@ -28,7 +28,7 @@
         <div>
           <div class="brand-title">
             <span data-i18n="appTitle">TenderPacker</span>
-            <span class="brand-tag">v1.0 Pro</span>
+            <span class="brand-tag">v2.0 Pro</span>
           </div>
           <div class="brand-subtitle" data-i18n="appSubtitle">Tender Document Preparation & Validation Engine</div>
         </div>
@@ -55,6 +55,31 @@
         <!-- Auto-Match Button -->
         <button class="btn btn-secondary btn-sm" id="btn-auto-match" type="button" title="Auto-match files by title">
           <span>✨</span> <span data-i18n="autoMatch">Auto-Match</span>
+        </button>
+
+        <!-- Bonus 3: Export Checklist CSV/Excel -->
+        <button class="btn btn-secondary btn-sm" id="btn-export-checklist" type="button" title="Export Checklist to CSV / Excel">
+          <span>📊</span> <span data-i18n="exportChecklist">Export Checklist</span>
+        </button>
+
+        <!-- Bonus 2: Seal & Signature Modal Button -->
+        <button class="btn btn-secondary btn-sm" id="btn-open-seal-modal" type="button" title="Add Company Seal or Signature">
+          <span>🖋️</span> <span data-i18n="sealSignature">Seal & Signature</span>
+        </button>
+
+        <!-- Bonus 4: Save & Open Project File -->
+        <button class="btn btn-secondary btn-sm" id="btn-save-project" type="button" title="Export project to JSON file">
+          <span>💾</span> <span data-i18n="saveProject">Save Project</span>
+        </button>
+
+        <label class="btn btn-secondary btn-sm" style="cursor: pointer;" title="Import saved project JSON">
+          <span>📂</span> <span data-i18n="openProject">Open Project</span>
+          <input type="file" id="project-file-input" accept=".json" style="display: none;">
+        </label>
+
+        <!-- Bonus 8: AI Assistant Button -->
+        <button class="btn btn-purple btn-sm" id="btn-open-ai-modal" type="button" title="AI Compliance Auditor & Advisor">
+          <span>🤖</span> <span data-i18n="aiAssistant">AI Help</span>
         </button>
 
         <!-- Reset Button -->
@@ -111,7 +136,7 @@
               <line x1="12" y1="3" x2="12" y2="15"></line>
             </svg>
             <div class="dropzone-text" data-i18n="dropzoneTitle">Drop PDF files here or click to browse</div>
-            <div class="dropzone-subtext" data-i18n="dropzoneSub">Accepts multiple PDF files simultaneously</div>
+            <div class="dropzone-subtext" data-i18n="dropzoneSub">Accepts multiple PDF files simultaneously. Damaged/bad files handled safely.</div>
             <input type="file" id="pdf-file-input" multiple accept=".pdf,application/pdf">
           </div>
 
@@ -155,12 +180,12 @@
 
     </div>
 
-    <!-- Package Generation Panel -->
+    <!-- Package Generation Panel with Bonus Options -->
     <section class="generation-panel" id="generation-section">
       <div class="generation-header">
         <div>
           <h3 class="generation-title" data-i18n="generationTitle">Package Generation & Readiness</h3>
-          <p class="generation-summary-text">Follows tender rules: Cover page in English, sorted pages, and running footers on every page.</p>
+          <p class="generation-summary-text">Follows tender rules: Cover page in English, sorted pages, running footers, and optional index/seal.</p>
         </div>
         <div class="generation-controls">
           <button class="btn btn-secondary" id="btn-preview-package" disabled>
@@ -175,6 +200,21 @@
         </div>
       </div>
 
+      <!-- Bonus Configuration Toggles -->
+      <div class="package-options-row">
+        <!-- Bonus 1 & 5: Index Page with Start Pages and correct Bangla text -->
+        <label class="checkbox-label" title="Insert an Index / Table of Contents page right after the Cover page with start page numbers">
+          <input type="checkbox" id="chk-include-index" checked>
+          <span>📑 <strong data-i18n="includeIndexTitle">Include Document Index Page</strong> (<span data-i18n="includeIndexDesc">Page numbers where each document starts + Bangla text</span>)</span>
+        </label>
+
+        <!-- Bonus 2: Seal Stamp Checkbox -->
+        <label class="checkbox-label" title="Stamp digital seal or signature if uploaded">
+          <input type="checkbox" id="chk-stamp-seal" checked>
+          <span>🖋️ <strong data-i18n="stampSealTitle">Stamp Digital Seal/Signature</strong> (<span id="seal-status-badge">No seal uploaded</span>)</span>
+        </label>
+      </div>
+
       <!-- Blocking status / Readiness box -->
       <div id="generation-status-box">
         <!-- Injected via JavaScript -->
@@ -185,7 +225,7 @@
 
   <!-- PDF Preview Modal -->
   <div class="modal-overlay" id="preview-modal">
-    <div class="modal-container">
+    <div class="modal-container modal-lg">
       <div class="modal-header">
         <h3 class="modal-title" id="modal-title">Document Preview</h3>
         <button class="btn-icon" id="modal-close-btn">✕</button>
@@ -195,6 +235,122 @@
       </div>
       <div class="modal-footer">
         <button class="btn btn-secondary" id="modal-footer-close-btn" data-i18n="closeModal">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bonus 2: Seal & Signature Modal -->
+  <div class="modal-overlay" id="seal-modal">
+    <div class="modal-container modal-md">
+      <div class="modal-header">
+        <h3 class="modal-title">🖋️ Digital Seal / Signature Stamp</h3>
+        <button class="btn-icon" id="seal-modal-close">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Upload Seal / Signature Image (PNG)</label>
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <input type="file" id="seal-file-input" accept="image/png" class="form-input" style="flex: 1;">
+            <button class="btn btn-secondary btn-sm" id="btn-use-sample-logo" type="button" title="Use company_logo.png from sample pack">Use Sample Logo</button>
+          </div>
+          <small style="color: #64748b;">Upload a transparent PNG image to stamp onto chosen document pages.</small>
+        </div>
+
+        <div id="seal-preview-box" style="display: none; padding: 1rem; background: #ffffff; border: 1px solid var(--border); border-radius: 8px; text-align: center;">
+          <img id="seal-preview-img" style="max-height: 80px; max-width: 160px; object-fit: contain;" alt="Seal Preview">
+          <div style="margin-top: 0.5rem;">
+            <button class="btn btn-danger btn-sm" id="btn-remove-seal" type="button">Remove Seal</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Stamp On Pages</label>
+          <select id="seal-target-pages" class="form-select">
+            <option value="all">All Pages</option>
+            <option value="cover_index">Cover & Index Pages Only</option>
+            <option value="first_page_each">First Page of Each Document</option>
+            <option value="cover_only">Cover Page Only</option>
+            <option value="last_page">Last Page Only</option>
+            <option value="custom">Custom Pages (specify below)</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="seal-custom-pages-group" style="display: none;">
+          <label class="form-label">Custom Page Numbers (comma-separated, e.g. 1, 2, 5)</label>
+          <input type="text" id="seal-custom-pages-input" class="form-input" placeholder="e.g. 1, 2, 5">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Position on Page</label>
+          <select id="seal-position" class="form-select">
+            <option value="bottom_right">Bottom Right (above footer)</option>
+            <option value="bottom_left">Bottom Left (above footer)</option>
+            <option value="top_right">Top Right (header area)</option>
+            <option value="center">Center</option>
+          </select>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label">Width: <span id="seal-width-val">80</span>px</label>
+            <input type="range" id="seal-width-slider" min="40" max="180" value="80" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Opacity: <span id="seal-opacity-val">90</span>%</label>
+            <input type="range" id="seal-opacity-slider" min="10" max="100" value="90" class="form-input">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="btn-save-seal-settings" type="button">Apply Seal Settings</button>
+        <button class="btn btn-secondary" id="seal-modal-cancel" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bonus 8: AI Help Modal -->
+  <div class="modal-overlay" id="ai-modal">
+    <div class="modal-container modal-md">
+      <div class="modal-header">
+        <h3 class="modal-title">🤖 AI Tender Advisor & Auditor</h3>
+        <button class="btn-icon" id="ai-modal-close">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Your Gemini / AI API Key (Rulebook Section 5.5)</label>
+          <div style="display: flex; gap: 0.5rem;">
+            <input type="password" id="ai-api-key-input" class="form-input" placeholder="Enter your Gemini API key (AIzaSy...)" style="flex: 1;">
+            <button class="btn btn-secondary btn-sm" id="btn-save-api-key" type="button">Save Key</button>
+          </div>
+          <small style="color: #64748b;">Key is stored solely in your browser's local storage and used directly from your client.</small>
+        </div>
+
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+          <button class="btn btn-purple btn-sm" id="btn-ai-audit-package" type="button">
+            <span>🔍</span> Run AI Compliance Audit
+          </button>
+          <button class="btn btn-secondary btn-sm" id="btn-ai-suggest-dates" type="button">
+            <span>📅</span> AI Expiry Date Advice
+          </button>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">AI Analysis & Insights</label>
+          <div id="ai-output-box" style="background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 1rem; min-height: 180px; max-height: 300px; overflow-y: auto; font-size: 0.88rem; color: #1e293b; line-height: 1.6;">
+            <p style="color: #94a3b8;">Click "Run AI Compliance Audit" or ask a question to analyze your tender submission package.</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Ask AI Question</label>
+          <div style="display: flex; gap: 0.5rem;">
+            <input type="text" id="ai-user-prompt" class="form-input" placeholder="e.g. Why is bank solvency expiry date required?" style="flex: 1;">
+            <button class="btn btn-primary btn-sm" id="btn-ai-send-prompt" type="button">Ask</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="ai-modal-cancel" type="button">Close</button>
       </div>
     </div>
   </div>
